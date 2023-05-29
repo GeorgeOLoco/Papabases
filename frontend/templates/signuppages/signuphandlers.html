@@ -143,8 +143,6 @@ document.addEventListener('DOMContentLoaded', () => {
         //console.log(schoolsData);
         if (schoolsData) {
           for (const school of schoolsData) {
-            //console.log(school.school_name); //, school_name);
-            //console.log(users_school_id, school.school_id);
             if (school.school_name === school_name) {
               users_school_id = school.school_id;
               break;
