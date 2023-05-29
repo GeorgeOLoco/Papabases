@@ -40,7 +40,7 @@
   </style>
 </head>
 <body>
-  <form action="http://localhost:3305/adduser/{username}/{password}/{user_name}/{birthday}/{email}" method="GET">    
+  <form action="http://localhost:3305/adduser/{username}/{password}/{user_name}/{birthday}/{email}" method="GET">
     <label for="username">Username:</label>
     <input type="text" id="username" name="username" required>
     
@@ -61,12 +61,36 @@
       <option value="">Select a school</option>
     </select>
     
-    <input type="submit" value="Sign Up">
+    <input type="submit" id="submitButton" value="Sign Up">
   </form>
 
   <script>
-    // Fetch schools list from localhost:3305/all_schools
-    fetch('http://localhost:3305/all_schools')
+  async function fetchUserData() {
+    try {
+      const response = await fetch('http://localhost:3305/all_users');
+      const userData = await response.json();
+  
+      return userData;
+    } catch (error) {
+      console.error('Error fetching users info:', error);
+      return null;
+    }
+  }
+  
+  async function fetchSchoolsData() {
+    try {
+      const response = await fetch('http://localhost:3305/all_schools');
+      const userSchool = await response.json();
+  
+      return userSchool;
+    } catch (error) {
+      console.error('Error fetching schools info:', error);
+      return null;
+    }
+  }
+
+
+        fetch('http://localhost:3305/all_schools')
       .then(response => response.json())
       .then(data => {
         const select = document.getElementById('school');
@@ -78,25 +102,87 @@
           option.textContent = school.school_name;
           select.appendChild(option);
         });
+        const submitButton = document.getElementById('submitButton');
+
+
       })
       .catch(error => console.error('Error fetching schools:', error));
-
- 
-      document.addEventListener('DOMContentLoaded', () => {
-    const form = document.getElementById('signupForm');
-    form.addEventListener('submit', (event) => {
-      event.preventDefault(); // Prevent the form from submitting normally
       
-      const username = document.getElementById('username').value;
-      const password = document.getElementById('password').value;
-      const user_name = document.getElementById('user_name').value;
-      const birthday = document.getElementById('birthday').value;
-      const email = document.getElementById('email').value;
+document.addEventListener('DOMContentLoaded', () => {
+  const submitButton = document.getElementById('submitButton');
 
-      const actionUrl = `/adduser/${username}/${password}/${user_name}/${birthday}/${email}`;
-      window.location.href = actionUrl; // Redirect to the generated URL
-    });
+  submitButton.addEventListener('click', async (event) => {
+    event.preventDefault(); // Prevent the form from submitting normally
+
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+    const user_name = document.getElementById('user_name').value;
+    const birthday = document.getElementById('birthday').value;
+    const email = document.getElementById('email').value;
+    const school_name = document.getElementById('school').options[document.getElementById('school').selectedIndex].text;
+    try {
+      // Add user
+      const actionUrl = `http://localhost:3305/adduser/${username}/${password}/${user_name}/${birthday}/${email}`;
+      const response = await fetch(actionUrl);
+      if (response.ok) {
+        alert("Dear Student, you signed up successfully, wait until you get approved!");
+
+        // Fetch user data
+        const userData = await fetchUserData();
+        let user;
+        for (const userDataItem of userData) {
+          if (userDataItem.username === username && userDataItem.passcode === password) {
+            user = userDataItem;
+            break;
+          }
+        }
+
+        // Fetch schools data
+        const schoolsData = await fetchSchoolsData();
+        let users_school_id;
+        //console.log(schoolsData);
+        if (schoolsData) {
+          for (const school of schoolsData) {
+            //console.log(school.school_name); //, school_name);
+            //console.log(users_school_id, school.school_id);
+            if (school.school_name === school_name) {
+              users_school_id = school.school_id;
+              break;
+            }
+          }
+        } else {
+          throw new Error('Failed to fetch schools data');
+        }
+
+        console.log(user);
+        console.log(user.user_id,users_school_id);
+        const addStudent = `http://localhost:3305/addstudent/${user.user_id}/${users_school_id}`;
+        try {
+          const response = await fetch(addStudent);
+          if (response.ok) {
+            console.log("Added as a student");
+          } else {
+            console.log("Couldn't add you as a user");
+          }
+        } catch (error) {
+          console.error('Error adding user:', error);
+          // Handle the error or show an error message to the user
+        }
+
+        setTimeout(() => {
+          // Redirect to the home page
+          window.location.href = '/';
+        }, 2000);
+      } else {
+        console.error('Error adding user:', response.status);
+        // Handle the error or show an error message to the user
+      }
+    } catch (error) {
+      console.error('Error adding user:', error);
+      // Handle the error or show an error message to the user
+    }
   });
+});
   </script>
 </body>
 </html>

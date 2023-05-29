@@ -2,11 +2,15 @@
 <html>
 <head>
     <title>Home</title>
-    <link rel="stylesheet" href="/static/css/StudentProfile.css">
+    <link rel="stylesheet" href="/static/css/HomePage.css">
 </head>
 <body>
     <h1>My Profile</h1>
     <div class="profile">
+        <div class="profile-item">
+            <label>User Type:</label>
+            <span id="userType"></span>
+        </div>
         <div class="profile-item">
             <label>User ID:</label>
             <span id="user-id"></span>
@@ -30,16 +34,53 @@
     </div>
 
     <script>
+
+async function fetchTeachers() {
+    try {
+      const response = await fetch('http://localhost:3305/allteachers');
+      const teachersData = await response.json();
+  
+      return teachersData;
+    } catch (error) {
+      console.error('Error fetching teacher info:', error);
+      return null;
+    }
+  }
+
         let user = JSON.parse(localStorage.getItem("user"));
         console.log(user);
 
-        
+        (async () => {
+          const teachersData = await fetchTeachers(); 
+      
+          let flag = false;
+          for (const teachersDataItem of teachersData) {
+            if (teachersDataItem.user_id === user.user_id) { 
+      
+              if (user.approved === 1) {
+                flag = true;
+                console.log('You are allowed to stay here!');
+              } else {
+                alert("You are not approved yet");
+                window.location.href = '/';
+              }
+            }
+          }
+          if (!flag) {
+            alert('You are not a Teacher!');
+            window.location.href = '/';
+          }
 
+
+        document.getElementById("userType").textContent = "Teacher";
         document.getElementById("user-id").textContent = user.user_id;
         document.getElementById("username").textContent = user.username;
         document.getElementById("user-name").textContent = user.user_name;
         document.getElementById("email").textContent = user.email;
         document.getElementById("birthday").textContent = user.birthday;
+    })();
     </script>
 </body>
 </html>
+
+

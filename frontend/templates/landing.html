@@ -128,8 +128,8 @@ async function fetchUserData() {
         for (const studentsDataItem of studentsData) {
         if (studentsDataItem.user_id === user.user_id) {
 
+          flag=true;
           if(user.approved === 1){
-            flag=true;
             document.cookie = "user=" + user;
             console.log('Login successful!');
             window.location.href = `${userType}.html`;}
@@ -152,8 +152,8 @@ async function fetchUserData() {
         for (const teachersDataItem of teachersData) {
         if (teachersDataItem.user_id === user.user_id) {
 
+          flag = true;
           if(user.approved === 1){
-            flag = true;
             document.cookie = "user=" + user;
             console.log('Login successful!');
             window.location.href = `${userType}.html`;}
@@ -173,18 +173,19 @@ async function fetchUserData() {
         let flag = false;
         for (const handlersDataItem of handlersData) {
         if (handlersDataItem.user_id === user.user_id) {
-          
-          if(handlersDataItem.approved === 1){
-            flag=true;
+
+          flag=true;
+          if(user.approved === 1){
             document.cookie = "user=" + user;
             console.log('Login successful!');
             window.location.href = `${userType}.html`;}
           else{
           alert("You are not approved yet")
           location.reload();
-        }}
+        }
+        }
     }
-    if(!flag){
+    if (!flag){
     alert('You are not a Handler!');
     location.reload();}
   }

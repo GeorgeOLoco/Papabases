@@ -1,6 +1,84 @@
 <!DOCTYPE html>
-<script>
-    //var user = localStorage.getItem("user");
-    let user = JSON.parse(localStorage.getItem("user"));
-    console.log(user);
-</script>
+<html>
+<head>
+    <title>Home</title>
+    <link rel="stylesheet" href="/static/css/HomePage.css">
+</head>
+<body>
+    <h1>My Profile</h1>
+    <div class="profile">
+        <div class="profile-item">
+            <label>User Type:</label>
+            <span id="userType"></span>
+        </div>
+        <div class="profile-item">
+            <label>User ID:</label>
+            <span id="user-id"></span>
+        </div>
+        <div class="profile-item">
+            <label>Username:</label>
+            <span id="username"></span>
+        </div>
+        <div class="profile-item">
+            <label>Name-Surname:</label>
+            <span id="user-name"></span>
+        </div>
+        <div class="profile-item">
+            <label>Email:</label>
+            <span id="email"></span>
+        </div>
+        <div class="profile-item">
+            <label>Birthday:</label>
+            <span id="birthday"></span>
+        </div>
+    </div>
+
+    <script>
+        async function fetchHandlers() {
+          try {
+            const response = await fetch('http://localhost:3305/allhandlers');
+            const handlersData = await response.json();
+      
+            return handlersData;
+          } catch (error) {
+            console.error('Error fetching handlers info:', error);
+            return null;
+          }
+        }
+       
+      
+        let user = JSON.parse(localStorage.getItem("user"));
+        console.log(user);
+      
+        (async () => {
+          const handlersData = await fetchHandlers(); 
+      
+          let flag = false;
+          for (const handlersDataItem of handlersData) {
+            if (handlersDataItem.user_id === user.user_id) { 
+      
+              if (user.approved === 1) {
+                flag = true;
+                console.log('You are allowed to stay here!');
+              } else {
+                alert("You are not approved yet");
+                window.location.href = '/';
+              }
+            }
+          }
+          if (!flag) {
+            alert('You are not a Handler!');
+            window.location.href = '/';
+          }
+      
+          document.getElementById("userType").textContent = "Handler";
+          document.getElementById("user-id").textContent = user.user_id;
+          document.getElementById("username").textContent = user.username;
+          document.getElementById("user-name").textContent = user.user_name;
+          document.getElementById("email").textContent = user.email;
+          document.getElementById("birthday").textContent = user.birthday;
+        })();
+      </script>
+      
+</body>
+</html>
