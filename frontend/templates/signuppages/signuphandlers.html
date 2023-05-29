@@ -153,7 +153,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         console.log(user);
-        console.log(user.user_id,users_school_id);
         const addHandler = `http://localhost:3305/addhandler/${user.user_id}/${users_school_id}`;
         try {
           const response = await fetch(addHandler);
@@ -172,8 +171,8 @@ document.addEventListener('DOMContentLoaded', () => {
           window.location.href = '/';
         }, 2000);
       } else {
-        console.error('Error adding user:', response.status);
-        // Handle the error or show an error message to the user
+        alert("This username is already taken!");
+        location.reload();
       }
     } catch (error) {
       console.error('Error adding user:', error);
