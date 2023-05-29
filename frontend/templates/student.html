@@ -7,10 +7,14 @@
 <body>
     <h1>My Profile</h1>
     <div class="profile">
-        <div class="profile-item">
-            <label>User Type:</label>
-            <span id="userType"></span>
-        </div>
+      <div class="profile-item">
+          <label>User Type:</label>
+          <span id="userType"></span>
+      </div>
+      <div class="profile-item">
+          <label>School:</label>
+          <span id="School"></span>
+      </div>
         <div class="profile-item">
             <label>User ID:</label>
             <span id="user-id"></span>
@@ -32,6 +36,28 @@
             <span id="birthday"></span>
         </div>
     </div>
+    
+    <!-- Rectangles container -->
+    <div class="rectangle-container">
+        <div class="rectangle">
+            <button class="rectangle-button" onclick="window.location.href='/student/books';">Show</button>
+            <p class="rectangle-content">The list of books in my school</p>
+        </div>
+    
+        <div class="rectangle">
+            <button class="rectangle-button">Review</button>
+            <p class="rectangle-content">Review of a book thats in my school's library</p>
+        </div>
+
+        <div class="rectangle">
+          <button class="rectangle-button">Rent</button>
+          <p class="rectangle-content">Rent a book from my school's library</p>
+      </div>
+  
+      <div class="rectangle">
+        <button class="rectangle-button">Reserve</button>
+        <p class="rectangle-content">Reserve a book from my school's library</p>
+      </div>
 
     <script>
         async function fetchStudents() {
@@ -42,6 +68,17 @@
             return studentsData;
           } catch (error) {
             console.error('Error fetching student info:', error);
+            return null;
+          }
+        }
+        async function fetchSchoolsData() {
+          try {
+            const response = await fetch('http://localhost:3305/all_schools');
+            const userSchool = await response.json();
+  
+            return userSchool;
+          } catch (error) {
+            console.error('Error fetching schools info:', error);
             return null;
           }
         }
@@ -59,6 +96,8 @@
       
               if (user.approved === 1) {
                 flag = true;
+                console.log(studentsDataItem);
+                schoolID = studentsDataItem.school_id;
                 console.log('You are allowed to stay here!');
               } else {
                 alert("You are not approved yet");
@@ -70,13 +109,24 @@
             alert('You are not a Student!');
             window.location.href = '/';
           }
-      
+          
+          const schoolsData = await fetchSchoolsData();
+          //console.log(schoolID);
+          for (const schoolsDataItem of studentsData){
+            if (schoolsDataItem.school_id === schoolID) {
+              schoolsname = schoolsDataItem.school_name;
+            }
+
+          }
+
           document.getElementById("userType").textContent = "Student";
+          document.getElementById("school").textContent = schoolsname;
           document.getElementById("user-id").textContent = user.user_id;
           document.getElementById("username").textContent = user.username;
           document.getElementById("user-name").textContent = user.user_name;
           document.getElementById("email").textContent = user.email;
           document.getElementById("birthday").textContent = user.birthday;
+          
         })();
       </script>
       

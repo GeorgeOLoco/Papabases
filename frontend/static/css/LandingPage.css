@@ -12,6 +12,14 @@
     background-color: #cacaca;
     padding: 10px;
   }
+  
+  .button:hover {
+    background-color: #45a049;
+  }
+  
+  .button2:hover {
+    background-color: #232423;
+  }
 
   h2 {
     text-align: center;

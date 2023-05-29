@@ -13,7 +13,7 @@
       <input type="text" id="handler-username" name="handler-username" required>
       <label for="handler-password">Password:</label>
       <input type="password" id="handler-password" name="handler-password" required>
-      <input type="submit" value="Login" onclick="checkCredentials(event, 'handler')">
+      <input type="submit" class="button" value="Login" onclick="checkCredentials(event, 'handler')">
       <input type="button" value="Sign Up" onclick="window.location.href='SignUpHandlers';">
     </form>
   </div>
@@ -25,7 +25,7 @@
         <input type="text" id="teacher-username" name="teacher-username" required>
         <label for="teacher-password">Password:</label>
         <input type="password" id="teacher-password" name="teacher-password" required>
-        <input type="submit" value="Login" onclick="checkCredentials(event, 'teacher')">
+        <input type="submit" class="button" value="Login" onclick="checkCredentials(event, 'teacher')">
         <input type="button" value="Sign Up" onclick="window.location.href='SignUpTeachers';">
     </form>
   </div>
@@ -37,7 +37,7 @@
         <input type="text" id="student-username" name="student-username" required>
         <label for="student-password">Password:</label>
         <input type="password" id="student-password" pass="student-password" required>
-        <input type="submit" value="Login" onclick="checkCredentials(event, 'student')">        
+        <input type="submit" class="button" value="Login" onclick="checkCredentials(event, 'student')">        
         <input type="button" value="Sign Up" onclick="window.location.href='SignUpStudents';">
     </form>
   </div>
@@ -132,7 +132,7 @@ async function fetchUserData() {
           if(user.approved === 1){
             document.cookie = "user=" + user;
             console.log('Login successful!');
-            window.location.href = `${userType}.html`;}
+            window.location.href = `${userType}`;}
           else{
           alert("You are not approved yet")
           window.location.href = '/wait_for_approval';
@@ -157,7 +157,7 @@ async function fetchUserData() {
           if(user.approved === 1){
             document.cookie = "user=" + user;
             console.log('Login successful!');
-            window.location.href = `${userType}.html`;}
+            window.location.href = `${userType}`;}
             else{
             alert("You are not approved yet");
             window.location.href = '/wait_for_approval';
@@ -181,7 +181,7 @@ async function fetchUserData() {
           if(user.approved === 1){
             document.cookie = "user=" + user;
             console.log('Login successful!');
-            window.location.href = `${userType}.html`;}
+            window.location.href = `${userType}`;}
           else{
           alert("You are not approved yet");
             window.location.href = '/wait_for_approval';

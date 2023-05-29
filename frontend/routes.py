@@ -44,18 +44,23 @@ def signup_user_to_db(username,password,user_name,birthday,email):
 
 
 
-@app.route("/Student")
+@app.route("/student")
 def page_for_student():
     return render_template("/student.html", pageTitle="Home Page")
 
-@app.route("/Teacher")
+@app.route("/teacher")
 def page_for_teacher():
     return render_template("/teacher.html", pageTitle="Home Page")
 
-@app.route("/Handler")
+@app.route("/handler")
 def page_for_handler():
     return render_template("/handler.html", pageTitle="Home Page")
 
-@app.route("/Mastoras")
+@app.route("/mastoras")
 def page_for_mastoras():
     return render_template("/mastoras.html", pageTitle="Home Page")
+
+@app.route("/student/books")
+def all_books_in_school_x():
+    return render_template("/books.html", pageTitle="Library's books")
+
