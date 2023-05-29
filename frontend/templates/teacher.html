@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Home</title>
+    <link rel="stylesheet" href="/static/css/StudentProfile.css">
+</head>
+<body>
+    <h1>My Profile</h1>
+    <div class="profile">
+        <div class="profile-item">
+            <label>User ID:</label>
+            <span id="user-id"></span>
+        </div>
+        <div class="profile-item">
+            <label>Username:</label>
+            <span id="username"></span>
+        </div>
+        <div class="profile-item">
+            <label>Name-Surname:</label>
+            <span id="user-name"></span>
+        </div>
+        <div class="profile-item">
+            <label>Email:</label>
+            <span id="email"></span>
+        </div>
+        <div class="profile-item">
+            <label>Birthday:</label>
+            <span id="birthday"></span>
+        </div>
+    </div>
+
+    <script>
+        let user = JSON.parse(localStorage.getItem("user"));
+        console.log(user);
+
+        
+
+        document.getElementById("user-id").textContent = user.user_id;
+        document.getElementById("username").textContent = user.username;
+        document.getElementById("user-name").textContent = user.user_name;
+        document.getElementById("email").textContent = user.email;
+        document.getElementById("birthday").textContent = user.birthday;
+    </script>
+</body>
+</html>

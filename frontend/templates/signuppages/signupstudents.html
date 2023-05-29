@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Student Signup</title>
+  <style>
+    form {
+      max-width: 400px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    
+    label {
+      display: block;
+      margin-bottom: 10px;
+    }
+    
+    input[type="text"],
+    input[type="password"],
+    input[type="date"],
+    input[type="email"],
+    select {
+      width: 100%;
+      padding: 5px;
+      margin-bottom: 10px;
+    }
+    
+    input[type="submit"] {
+      width: 100%;
+      padding: 10px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    
+    /* Adjust select option styles for visibility */
+    select option {
+      color: black;
+    }
+  </style>
+</head>
+<body>
+  <form action="http://localhost:3305/adduser/{username}/{password}/{user_name}/{birthday}/{email}" method="GET">    
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username" required>
+    
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" required>
+    
+    <label for="user_name">Name and Surname:</label>
+    <input type="text" id="user_name" name="user_name" required>
+    
+    <label for="birthday">Birthday:</label>
+    <input type="date" id="birthday" name="birthday" required>
+    
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required> 
+    
+    <label for="school">School:</label>
+    <select id="school" name="school" required>
+      <option value="">Select a school</option>
+    </select>
+    
+    <input type="submit" value="Sign Up">
+  </form>
+
+  <script>
+    // Fetch schools list from localhost:3305/all_schools
+    fetch('http://localhost:3305/all_schools')
+      .then(response => response.json())
+      .then(data => {
+        const select = document.getElementById('school');
+        
+        // Populate select options with schools
+        data.forEach(school => {
+          const option = document.createElement('option');
+          option.value = school.id;
+          option.textContent = school.school_name;
+          select.appendChild(option);
+        });
+      })
+      .catch(error => console.error('Error fetching schools:', error));
+
+ 
+      document.addEventListener('DOMContentLoaded', () => {
+    const form = document.getElementById('signupForm');
+    form.addEventListener('submit', (event) => {
+      event.preventDefault(); // Prevent the form from submitting normally
+      
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+      const user_name = document.getElementById('user_name').value;
+      const birthday = document.getElementById('birthday').value;
+      const email = document.getElementById('email').value;
+
+      const actionUrl = `/adduser/${username}/${password}/${user_name}/${birthday}/${email}`;
+      window.location.href = actionUrl; // Redirect to the generated URL
+    });
+  });
+  </script>
+</body>
+</html>
