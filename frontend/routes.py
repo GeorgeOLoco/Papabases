@@ -10,19 +10,19 @@ def index():
 
 
 
-@app.route("/signuppages/signuphandlers.html")
+@app.route("/SignUpHandlers")
 def signup_handler():
     return render_template("/signuppages/signuphandlers.html", pageTitle="Sign up Handler")
 
-@app.route("/signuppages/signupteachers.html")
+@app.route("/SignUpTeachers")
 def signup_teacher():
     return render_template("/signuppages/signupteachers.html", pageTitle="Sign up Teacher")
 
-@app.route("/signuppages/signupstudents.html")
+@app.route("/SignUpStudents")
 def signup_student():
     return render_template("/signuppages/signupstudents.html", pageTitle="Sign up Student")
 
-@app.route("/wait_for_approval.html")
+@app.route("/wait_for_approval")
 def wait_for_approval():
     return render_template("/signuppages/wait_for_approval.html", pageTitle="Wait up")
 
@@ -44,18 +44,18 @@ def signup_user_to_db(username,password,user_name,birthday,email):
 
 
 
-@app.route("/student.html")
+@app.route("/Student")
 def page_for_student():
     return render_template("/student.html", pageTitle="Home Page")
 
-@app.route("/teacher.html")
+@app.route("/Teacher")
 def page_for_teacher():
     return render_template("/teacher.html", pageTitle="Home Page")
 
-@app.route("/handler.html")
+@app.route("/Handler")
 def page_for_handler():
     return render_template("/handler.html", pageTitle="Home Page")
 
-@app.route("/mastoras.html")
+@app.route("/Mastoras")
 def page_for_mastoras():
     return render_template("/mastoras.html", pageTitle="Home Page")

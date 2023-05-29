@@ -14,7 +14,7 @@
       <label for="handler-password">Password:</label>
       <input type="password" id="handler-password" name="handler-password" required>
       <input type="submit" value="Login" onclick="checkCredentials(event, 'handler')">
-      <input type="button" value="Sign Up" onclick="window.location.href='signuppages/signuphandlers.html';">
+      <input type="button" value="Sign Up" onclick="window.location.href='SignUpHandlers';">
     </form>
   </div>
 
@@ -26,7 +26,7 @@
         <label for="teacher-password">Password:</label>
         <input type="password" id="teacher-password" name="teacher-password" required>
         <input type="submit" value="Login" onclick="checkCredentials(event, 'teacher')">
-        <input type="button" value="Sign Up" onclick="window.location.href='signuppages/signupteachers.html';">
+        <input type="button" value="Sign Up" onclick="window.location.href='SignUpTeachers';">
     </form>
   </div>
 
@@ -38,7 +38,7 @@
         <label for="student-password">Password:</label>
         <input type="password" id="student-password" pass="student-password" required>
         <input type="submit" value="Login" onclick="checkCredentials(event, 'student')">        
-        <input type="button" value="Sign Up" onclick="window.location.href='signuppages/signupstudents.html';">
+        <input type="button" value="Sign Up" onclick="window.location.href='SignUpStudents';">
     </form>
   </div>
 </div>
@@ -135,7 +135,7 @@ async function fetchUserData() {
             window.location.href = `${userType}.html`;}
           else{
           alert("You are not approved yet")
-          location.reload();
+          window.location.href = '/wait_for_approval';
         }
         }
     }
@@ -160,7 +160,9 @@ async function fetchUserData() {
             window.location.href = `${userType}.html`;}
             else{
             alert("You are not approved yet");
-            location.reload();}
+            window.location.href = '/wait_for_approval';
+          }
+
         }
     }
     if (!flag){
@@ -181,8 +183,9 @@ async function fetchUserData() {
             console.log('Login successful!');
             window.location.href = `${userType}.html`;}
           else{
-          alert("You are not approved yet")
-          location.reload();
+          alert("You are not approved yet");
+            window.location.href = '/wait_for_approval';
+
         }
         }
     }

@@ -1,106 +1,47 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Loading Screen</title>
+  <title>Wait for Approval</title>
   <style>
     body {
-      background-color: #222;
-      color: #fff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      margin: 0;
+      background-color: #f1f1f1;
       font-family: Arial, sans-serif;
     }
 
-    .loader {
-      position: relative;
-      width: 100px;
-      height: 100px;
-      animation: spin 1.5s infinite linear;
-    }
-
-    .loader:before,
-    .loader:after {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-    }
-
-    .loader:before {
-      background-color: #ff5773;
-      z-index: 2;
-      animation: fade 1.5s infinite;
-    }
-
-    .loader:after {
-      background-color: #ff5773;
-      opacity: 0.3;
-    }
-
-    @keyframes spin {
-      0% {
-        transform: rotate(0deg);
-      }
-      100% {
-        transform: rotate(360deg);
-      }
-    }
-
-    @keyframes fade {
-      0%,
-      100% {
-        opacity: 0.3;
-      }
-      50% {
-        opacity: 1;
-      }
-    }
-
-    .message {
-      font-size: 24px;
-      margin-left: 20px;
+    .container {
+      max-width: 400px;
+      margin: 100px auto;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
       text-align: center;
     }
 
-    .circles {
-      display: flex;
-      align-items: center;
+    h1 {
+      color: #333;
     }
 
-    .circle {
-      width: 10px;
-      height: 10px;
-      background-color: #ff5773;
-      border-radius: 50%;
-      margin: 0 4px;
-      animation: circle-rotate 1.2s infinite linear;
-    }
-
-    @keyframes circle-rotate {
-      0% {
-        transform: rotate(0deg);
-      }
-      100% {
-        transform: rotate(360deg);
-      }
+    p {
+      color: #777;
     }
   </style>
 </head>
 <body>
-  <div class="circles">
-    <div class="circle"></div>
-    <div class="circle"></div>
-    <div class="circle"></div>
+  <div class="container">
+    <h1>Wait for Approval</h1>
+
+    <p>Hello, <span id="username"></span>! Your account is pending approval. Please wait for an operator to approve your registration.</p>
   </div>
-  <div class="message">
-    Wait for approval
-  </div>
-  <div class="loader"></div>
+
+  <script>
+        let user = JSON.parse(localStorage.getItem("user"));
+        console.log(user);
+
+    // Assuming you have saved the username in a cookie named 'user.user_name'
+    var username = user.user_name;
+    document.getElementById('username').innerText = username;
+
+  </script>
 </body>
 </html>
